@@ -2,6 +2,8 @@ package com.example.voting.service;
 
 import com.example.voting.dto.request.CreateAccountRequest;
 import com.example.voting.entity.Account;
+import com.example.voting.exception.AppException;
+import com.example.voting.exception.ErrorCode;
 import com.example.voting.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class AccountService {
         Account account = new Account();
 
         if(accountRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("User existed");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         account.setUsername(request.getUsername());

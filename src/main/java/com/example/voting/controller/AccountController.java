@@ -1,6 +1,7 @@
 package com.example.voting.controller;
 
 import com.example.voting.dto.request.CreateAccountRequest;
+import com.example.voting.dto.response.ApiResponse;
 import com.example.voting.entity.Account;
 import com.example.voting.service.AccountService;
 import jakarta.validation.Valid;
@@ -16,8 +17,13 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/create")
-    Account createAccount(@RequestBody @Valid CreateAccountRequest request) {
-        return accountService.createAccount(request);
+    ApiResponse<Account> createAccount(@RequestBody @Valid CreateAccountRequest request) {
+        ApiResponse<Account> createAccountResponse = new ApiResponse<>();
+
+        createAccountResponse.setCode(201);
+        createAccountResponse.setMessage("Create account successful");
+        createAccountResponse.setResult(accountService.createAccount(request));
+        return createAccountResponse;
     }
 
     @GetMapping("/all")
