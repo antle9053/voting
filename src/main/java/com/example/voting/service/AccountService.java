@@ -13,31 +13,30 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
-    @Autowired
-    AccountRepository accountRepository;
+  @Autowired AccountRepository accountRepository;
 
-    public Account createAccount(CreateAccountRequest request) {
-        Account account = new Account();
+  public Account createAccount(CreateAccountRequest request) {
+    Account account = new Account();
 
-        if(accountRepository.existsByUsername(request.getUsername())) {
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
-
-        account.setUsername(request.getUsername());
-        account.setPassword(request.getPassword());
-        account.setEmail(request.getEmail());
-        account.setFirstname(request.getFirstname());
-        account.setLastname(request.getLastname());
-        account.setDob(request.getDob());
-
-        return accountRepository.save(account);
-    };
-
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    if (accountRepository.existsByUsername(request.getUsername())) {
+      throw new AppException(ErrorCode.USER_EXISTED);
     }
 
-    public Account getAccountById(String id) {
-        return accountRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-    }
+    account.setUsername(request.getUsername());
+    account.setPassword(request.getPassword());
+    account.setEmail(request.getEmail());
+    account.setFirstname(request.getFirstname());
+    account.setLastname(request.getLastname());
+    account.setDob(request.getDob());
+
+    return accountRepository.save(account);
+  }
+
+  public List<Account> getAllAccounts() {
+    return accountRepository.findAll();
+  }
+
+  public Account getAccountById(String id) {
+    return accountRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+  }
 }
