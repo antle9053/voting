@@ -1,9 +1,12 @@
 package com.example.voting.service;
 
 import com.example.voting.dto.request.CreateAccountRequest;
+import com.example.voting.dto.request.UpdateAccountRequest;
+import com.example.voting.dto.response.CreateAccountResponse;
 import com.example.voting.entity.Account;
 import com.example.voting.exception.AppException;
 import com.example.voting.exception.ErrorCode;
+import com.example.voting.mapper.AccountMapper;
 import com.example.voting.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,20 +17,21 @@ import java.util.Optional;
 @Service
 public class AccountService {
   @Autowired AccountRepository accountRepository;
+  @Autowired AccountMapper accountMapper;
 
-  public Account createAccount(CreateAccountRequest request) {
-    Account account = new Account();
-
+  public CreateAccountResponse createAccount(CreateAccountRequest request) {
     if (accountRepository.existsByUsername(request.getUsername())) {
       throw new AppException(ErrorCode.USER_EXISTED);
     }
 
-    account.setUsername(request.getUsername());
-    account.setPassword(request.getPassword());
-    account.setEmail(request.getEmail());
-    account.setFirstname(request.getFirstname());
-    account.setLastname(request.getLastname());
-    account.setDob(request.getDob());
+    Account account = accountMapper.toAccount(request);
+
+    return accountMapper.toCreateAccountResponse(accountRepository.save(account));
+  }
+
+  public Account updateAccount(String userId, UpdateAccountRequest request) {
+    Account account = getAccountById(userId);
+    accountMapper.updateAccount(account, request);
 
     return accountRepository.save(account);
   }

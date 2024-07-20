@@ -1,18 +1,19 @@
-package com.example.voting.dto.request;
+package com.example.voting.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpdateAccountRequest {
+public class CreateAccountResponse {
+  String id;
   String username;
   String password;
-  String email;
-  String dob;
   String firstname;
   String lastname;
+  String email;
+  String dob;
 }
