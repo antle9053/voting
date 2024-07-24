@@ -4,6 +4,7 @@ import com.example.voting.dto.request.CreateAccountRequest;
 import com.example.voting.dto.request.UpdateAccountRequest;
 import com.example.voting.dto.response.ApiResponse;
 import com.example.voting.dto.response.CreateAccountResponse;
+import com.example.voting.dto.response.UpdateAccountResponse;
 import com.example.voting.entity.Account;
 import com.example.voting.service.AccountService;
 import jakarta.validation.Valid;
@@ -18,9 +19,8 @@ public class AccountController {
   @Autowired private AccountService accountService;
 
   @PostMapping("/create")
-  ApiResponse<CreateAccountResponse> createAccount(
-      @RequestBody @Valid CreateAccountRequest request) {
-    ApiResponse<CreateAccountResponse> createAccountResponse = new ApiResponse<>();
+  ApiResponse<Account> createAccount(@RequestBody @Valid CreateAccountRequest request) {
+    ApiResponse<Account> createAccountResponse = new ApiResponse<>();
 
     createAccountResponse.setCode(201);
     createAccountResponse.setMessage("Create account successful");
@@ -29,9 +29,9 @@ public class AccountController {
   }
 
   @PatchMapping("/update/{userId}")
-  ApiResponse<Account> updateAccount(
+  ApiResponse<UpdateAccountResponse> updateAccount(
       @PathVariable String userId, @RequestBody UpdateAccountRequest request) {
-    ApiResponse<Account> updateAccountResponse = new ApiResponse<>();
+    ApiResponse<UpdateAccountResponse> updateAccountResponse = new ApiResponse<>();
     updateAccountResponse.setCode(204);
     updateAccountResponse.setMessage("Update account successful");
     updateAccountResponse.setResult(accountService.updateAccount(userId, request));

@@ -3,13 +3,15 @@ package com.example.voting.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigInteger;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateAccountResponse {
-  String id;
+  long id;
   String username;
   String password;
   String firstname;
