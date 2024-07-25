@@ -8,6 +8,7 @@ public enum ErrorCode {
   USERNAME_REQUIRED(400, "Username is required"),
   PASSWORD_INVALID(400, "Password is invalid"),
   PASSWORD_REQUIRED(400, "Password is required"),
+  USER_NOT_FOUND(404, "User not found"),
   ;
   private int code;
   private String message;

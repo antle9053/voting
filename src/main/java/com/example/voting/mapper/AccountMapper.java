@@ -11,6 +11,7 @@ import org.mapstruct.*;
 public interface AccountMapper {
   Account toAccount(CreateAccountRequest request);
 
+  @Mapping(target = "password", ignore = true)
   CreateAccountResponse toCreateAccountResponse(Account account);
 
   @Mapping(target = "password", ignore = true)

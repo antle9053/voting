@@ -27,21 +27,16 @@ public class AccountService {
   AccountRepository accountRepository;
   AccountMapper accountMapper;
 
-  public Account createAccount(CreateAccountRequest request) {
+  public CreateAccountResponse createAccount(CreateAccountRequest request) {
     if (accountRepository.existsByUsername(request.getUsername())) {
       throw new AppException(ErrorCode.USER_EXISTED);
     }
 
-    // Account account = accountMapper.toAccount(request);
+    Account account = accountMapper.toAccount(request);
 
-    Account account = new Account();
-    account.setUsername(request.getUsername());
     account.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
 
-    //    PasswordEncoder encoder = new BCryptPasswordEncoder();
-    //    account.setPassword(encoder.encode(request.getPassword()));
-
-    return accountRepository.save(account);
+    return accountMapper.toCreateAccountResponse(accountRepository.save(account));
   }
 
   public UpdateAccountResponse updateAccount(String userId, UpdateAccountRequest request) {

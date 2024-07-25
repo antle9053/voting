@@ -19,8 +19,9 @@ public class AccountController {
   @Autowired private AccountService accountService;
 
   @PostMapping("/create")
-  ApiResponse<Account> createAccount(@RequestBody @Valid CreateAccountRequest request) {
-    ApiResponse<Account> createAccountResponse = new ApiResponse<>();
+  ApiResponse<CreateAccountResponse> createAccount(
+      @RequestBody @Valid CreateAccountRequest request) {
+    ApiResponse<CreateAccountResponse> createAccountResponse = new ApiResponse<>();
 
     createAccountResponse.setCode(201);
     createAccountResponse.setMessage("Create account successful");
